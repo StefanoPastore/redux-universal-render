@@ -4,7 +4,7 @@
   "description": "Redux module for server side async render",
   "main": "build/index.js",
   "scripts": {
-    "test": "jest",
+    "test": "eslint src/** && jest --coverage",
     "build": "$(npm bin)/babel src -d build --ignore src/__TEST__/*-test.js",
     "prepublish": "npm run build"
   },
@@ -31,11 +31,14 @@
     "babel-plugin-transform-runtime": "^6.15.0",
     "babel-plugin-typecheck": "^3.9.0",
     "babel-preset-es2015": "^6.16.0",
+    "babel-preset-react": "^6.16.0",
     "babel-preset-stage-0": "^6.5.0",
     "eslint": "^2.4.0",
     "eslint-config-airbnb": "^6.2.0",
     "eslint-plugin-react": "^4.2.3",
     "jest": "^16.0.2",
-    "mocha": "^3.1.2"
+    "react-redux": "^4.4.5",
+    "redux": "^3.6.0",
+    "redux-thunk": "^2.1.0"
   }
 }

@@ -9,7 +9,7 @@ export default (
 ) => {
   if (!store) throw new Error('ReduxUniversalRender: Store is required in render!');
 
-  const rendered = renderMethod(render);
+  renderMethod(render);
 
   if (inExecution(store.getState())) {
     const unsubscribe = store.subscribe(() => {
@@ -19,9 +19,7 @@ export default (
         cb();
       }
     });
-
-    return null;
+  } else {
+    cb();
   }
-
-  return rendered;
 };
