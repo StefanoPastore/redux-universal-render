@@ -1,0 +1,22 @@
+{
+	"presets": ["es2015", "stage-0"],
+	"plugins": [
+		"transform-object-rest-spread",
+    "syntax-async-functions",
+    "transform-decorators-legacy",
+    ["typecheck", {
+      "disable": {
+        "production": true
+      }
+    }],
+    ["transform-regenerator", {
+        "asyncGenerators": false,
+        "generators": false,
+        "async": true
+    }],
+    ["transform-runtime", {
+      "polyfill": false,
+      "regenerator": true
+    }]
+	]
+}
