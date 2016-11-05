@@ -1,6 +1,6 @@
 ## Redux Universal render
 
-[![Coverage Status](https://coveralls.io/repos/github/StefanoPastore/redux-universal-render/badge.svg?branch=develop)](https://coveralls.io/github/StefanoPastore/redux-universal-render?branch=develop)
+[![Build Status](https://travis-ci.org/StefanoPastore/redux-universal-render.svg?branch=master)](https://travis-ci.org/StefanoPastore/redux-universal-render) [![Coverage Status](https://coveralls.io/repos/github/StefanoPastore/redux-universal-render/badge.svg?branch=develop)](https://coveralls.io/github/StefanoPastore/redux-universal-render?branch=develop)
 
 ### Dependencies
 [redux-thunk](https://github.com/gaearon/redux-thunk)
