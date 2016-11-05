@@ -16,20 +16,20 @@ describe('actions', () => {
   });
 
   it('should create an action to init async fetching', () => {
-    const asyncName = 'test';
+    const name = 'test';
     const expectedAction = {
       type: actions.ASYNC_ADD_ACTION,
-      asyncName,
+      name,
     };
-    expect(actions.asyncAddActionActionCreator(asyncName)).toEqual(expectedAction);
+    expect(actions.asyncAddActionActionCreator(name)).toEqual(expectedAction);
   });
 
   it('should create an action to init async fetching', () => {
-    const asyncName = 'test';
+    const name = 'test';
     const expectedAction = {
       type: actions.ASYNC_PARSED_ACTION,
-      asyncName,
+      name,
     };
-    expect(actions.asyncPasrsedActionActionCreator(asyncName)).toEqual(expectedAction);
+    expect(actions.asyncPasrsedActionActionCreator(name)).toEqual(expectedAction);
   });
 });

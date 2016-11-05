@@ -5,5 +5,5 @@ export const ASYNC_PARSED_ACTION = 'ASYNC_PARSED_ACTION';
 
 export const asyncInitActionCreator = () => ({ type: ASYNC_INIT });
 export const asyncEndActionCreator = () => ({ type: ASYNC_END });
-export const asyncAddActionActionCreator = (asyncName) => ({ type: ASYNC_ADD_ACTION, asyncName });
-export const asyncPasrsedActionActionCreator = (asyncName) => ({ type: ASYNC_PARSED_ACTION, asyncName });
+export const asyncAddActionActionCreator = (name) => ({ type: ASYNC_ADD_ACTION, name });
+export const asyncPasrsedActionActionCreator = (name) => ({ type: ASYNC_PARSED_ACTION, name });

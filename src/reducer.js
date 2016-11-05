@@ -28,17 +28,17 @@ export default (state = {
         ...state,
         actions: [
           ...state.actions,
-          action.asyncName,
+          action.name,
         ],
       };
     case ASYNC_PARSED_ACTION:
       return (() => {
         const actions = state.actions;
-        actions.splice(actions.indexOf(action.asyncName), 1);
+        actions.splice(actions.indexOf(action.name), 1);
 
         const parsed = [
           ...state.parsed,
-          action.asyncName,
+          action.name,
         ];
 
         return {
