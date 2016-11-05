@@ -4,19 +4,18 @@
 [redux-thunk](https://github.com/gaearon/redux-thunk)
 
 ### Why you need?
-It is necessary because you must wait data is loaded before render page on server side for crawler and speed page for user that view it.
+It is necessary because you must wait data is loaded before render page on server side.
 
 ### Usage
-This module supply for you two middleware, one reducer and render function to apply on server and client.
+This module supply for you middleware, reducer and render function to apply on server and client.
 
 Example store config:
 
 ```js
-import { createStore, compose, applyMiddleware } from 'redux';
+import { createStore, compose, applyMiddleware, combineReducers } from 'redux';
 import {
   reduxUniversalRenderReducer,
-  reduxUniversalRenderServer,
-  reduxUniversalRenderClient
+  reduxUniversalRenderMiddleware,
 } from 'redux-universal-render';
 import thunk from 'redux-thunk';
 import reducers from './reducers';
@@ -24,14 +23,14 @@ import reducers from './reducers';
 const initialState = {};
 
 const store = createStore(
-  {
+  combineReducers({
     ...reducers,
     reduxUniversalRenderReducer,
-  },
+  }),
   initialState,
   compose(
     applyMiddleware(
-      typeof window === 'undefined' ? reduxUniversalRenderServer : reduxUniversalRenderClient, // check in server or in client
+      reduxUniversalRenderMiddleware,
       thunk
     ),
   )
@@ -62,5 +61,25 @@ match({ routes, location: req.originalUrl }, (error, redirectLocation, renderPro
   });
 });
 ```
+
+Example actions creators:
+
+```js
+import { createAsyncActions, createSyncActions } from 'redux-universal-render';
+
+const asyncName = 'asyncName';
+
+export const ASYNC_ACTION = 'ASYNC_ACTION';
+export const syncActionCreator = (createSyncActions(asyncName)({ type: ASYNC_ACTION }));
+
+const asyncAction = dispatch => {
+  setTimeout(() => {
+    dispatch(syncActionCreator());
+  }, 200);
+};
+
+export const asyncActionCreator = (createAsyncActions(asyncName)(asyncAction));
+```
+
 ### Remember
 Remember apply middleware before redux-thunk.
