@@ -4,9 +4,9 @@ export const createAsyncActions = name => method => (...args) => {
   return asyncMethod;
 };
 
-export const createSyncActions = name => action => () => {
+export const createSyncActions = name => action => (...args) => {
   if (typeof action === 'function') {
-    return { ...action(), asyncName: name };
+    return { ...action(...args), asyncName: name };
   }
 
   return { ...action, asyncName: name };

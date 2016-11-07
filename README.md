@@ -85,3 +85,10 @@ export const asyncActionCreator = (createAsyncActions(asyncName)(asyncAction));
 
 ### Remember
 Remember apply middleware before redux-thunk.
+
+### API
+ - createAsyncActions: It is a function that receive univocal name for async function it return another function that receive async function to call to append `asyncName` and return last function and it is your action creator, it receive `dispatch` and `getState` as first arguments and your own arguments will Appends,
+
+ - createSyncActions: It is a function that receive univocal name to recognize which async action is ended, return another function that receive actionCreator or action object, if receive an actionCreator when you call last function you can pass your own arguments to your actionCreator,
+
+ - reduxUniversalRender: it is a function that receive `store`, component to render and callback called when all async actions are ended and you can render components with data fetching, you can also customize render function if pass as last arument default `renderToStaticMarkup`.
