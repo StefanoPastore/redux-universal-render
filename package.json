@@ -4,8 +4,10 @@
   "description": "Redux module for server side async render",
   "main": "build/index.js",
   "scripts": {
-    "test": "eslint src/** && jest --coverage && cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js",
+    "test": "eslint src/** && jest --coverage",
     "build": "$(npm bin)/babel src -d build --ignore src/__TEST__/*-test.js",
+    "clean": "rmrimraf build coverage",
+    "coverage": "cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js",
     "prepublish": "npm run test && npm run build"
   },
   "repository": {
@@ -40,6 +42,7 @@
     "jest": "^16.0.2",
     "react-redux": "^4.4.5",
     "redux": "^3.6.0",
-    "redux-thunk": "^2.1.0"
+    "redux-thunk": "^2.1.0",
+    "rimraf": "^2.5.4"
   }
 }
