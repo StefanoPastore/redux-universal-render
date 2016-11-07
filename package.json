@@ -1,12 +1,12 @@
 {
   "name": "redux-universal-render",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "Redux module for server side async render",
   "main": "build/index.js",
   "scripts": {
     "test": "eslint src/** && jest --coverage",
     "build": "$(npm bin)/babel src -d build --ignore src/__TEST__/*-test.js",
-    "clean": "rmrimraf build coverage",
+    "clean": "rimraf build coverage",
     "coverage": "cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js",
     "prepublish": "npm run test && npm run build"
   },
