@@ -11,7 +11,7 @@ describe('createActions', () => {
       type,
       asyncName,
     };
-    expect(createSyncActions(asyncName)({ type })()).toEqual(expectedAction);
+    expect(createSyncActions(asyncName)({ type })).toEqual(expectedAction);
   });
 
   it('should create a sync action with funcion', () => {
@@ -22,16 +22,25 @@ describe('createActions', () => {
       asyncName,
     };
     const actionCreator = () => ({ type });
-    expect(createSyncActions(asyncName)(actionCreator)()).toEqual(expectedAction);
+    expect(createSyncActions(asyncName)(actionCreator)).toEqual(expectedAction);
   });
 
   it('should create an async action', () => {
     const asyncName = 'ASYNC_NAME';
     let count = 0;
     const asyncAction = () => count++;
-    const created = createAsyncActions(asyncName)(asyncAction)();
+    const created = createAsyncActions(asyncName)(asyncAction);
     created();
     expect(count).toEqual(1);
     expect(created.asyncName).toEqual(asyncName);
+  });
+
+  it('should create an async action with dynamic name', () => {
+    const createName = params => JSON.stringify(params);
+    const asyncActionCreate = (params) => createAsyncActions(() => createName(params))((dispatch, getState) => ({
+      dispatch,
+      getState,
+    }));
+    expect(asyncActionCreate({ test: true }).asyncName).toBeDefined();
   });
 });
