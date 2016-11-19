@@ -3,7 +3,7 @@ import { createAsyncActions, createSyncActions } from '../../';
 const asyncName = 'test';
 
 export const ASYNC_ACTION = 'ASYNC_ACTION';
-export const syncActionCreator = (createSyncActions(asyncName)({ type: ASYNC_ACTION }));
+export const syncActionCreator = () => (createSyncActions(asyncName)({ type: ASYNC_ACTION }));
 
 const asyncAction = dispatch => {
   setTimeout(() => {
@@ -11,4 +11,4 @@ const asyncAction = dispatch => {
   }, 200);
 };
 
-export const asyncActionCreator = (createAsyncActions(asyncName)(asyncAction));
+export const asyncActionCreator = () => (createAsyncActions(asyncName)(asyncAction));
