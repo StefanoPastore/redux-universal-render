@@ -10,7 +10,8 @@ export default ({ dispatch, getState }) => next => action => {
   if (
     typeof action === 'function' &&
     typeof action.asyncName !== 'undefined' &&
-    parsed(getState()).indexOf(action.asyncName) !== -1
+    (parsed(getState()).indexOf(action.asyncName) !== -1 ||
+    actions(getState()).indexOf(action.asyncName) !== -1)
   ) {
     return null;
   }
