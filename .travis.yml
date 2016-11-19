@@ -6,6 +6,10 @@ script:
 - npm run test
 - npm run coverage
 - npm run build
+branches:
+  only:
+    - master
+    - tags
 deploy:
   provider: npm
   api_key:
