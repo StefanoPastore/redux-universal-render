@@ -12,6 +12,7 @@ branches:
     - /^[0-9]+\.[0-9]+\.[0-9]+$/
 deploy:
   provider: npm
+  email: step848@gmail.com
   api_key:
     secure: Jc00TVJ8Bzp17erxEkWAMvtuXeXn5Wd+6Z0tkQ2la4fY56FaqVABFIdh5UGI2hrm4jiXpuxFFMi7hBDY13uvJ5B1dLJ5BEFoY+vQMdj2GmJCoTxAzp4ozpMhJcmS6U+p2fYDvpnPiFiw3lScLYg/WNRhVqZWykP57Gr6rdwsQ0THqdEPZyn+kRz6e6qzzbtww81I8KIe4Ck+dywDY/hw0HQmHeXdIN/8xo3VD2oCUuO0o7Sd5BQrDQpnz4oWT2WtVdpDOY7bPTrwMCb6GX7w593sm8U/0vUCJB2qeJ+zaWUgTFg1fDH3c5kSCpH0yqme85YHo7VL0trguezAQAf6kYfne1S8yLTP6OolSEWtks5IiejReyViCi9I5mZ7hn0BcW/WD/vtdKJ0G0DXFWKp8WrtYXTwkDmOQ7nBriZBw4luaNF53k0W+6sjpiR3kcJ0fCJwBgm6x8TC3i+z+pUU/rqDwEDPXd2CEwy04sEDKOh1iuZcuTceVd3hT4Yc7CQiy3otXz7Mhz2p6CHGFTit/zgoAXvR6M8xsOB5pczrG2c4NM4/uW5gSS0CgYkdiF9Q07FhmBpgov3bLahS37d/O8rIrd2TkZ9DBv1bMunFzsO1m9b7eil9AR6Z0Y19RkpitRWyas6xy02EzWAb1q6dmWheydQ++3ydChoeCadCbCU=
   on:
