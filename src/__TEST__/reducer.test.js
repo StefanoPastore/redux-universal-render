@@ -7,45 +7,64 @@ describe('reducer', () => {
       reducer(undefined, {})
     ).toEqual({
       run: false,
-      end: false,
+      end: true,
       actions: [],
       parsed: [],
-    });
-  });
-
-  it('should return async fetching init', () => {
-    expect(
-      reducer({ run: false }, actions.asyncInitActionCreator())
-    ).toEqual({
-      run: true,
-    });
-  });
-
-  it('should return async fetching end', () => {
-    expect(
-      reducer({ run: true, end: false }, actions.asyncEndActionCreator())
-    ).toEqual({
-      run: false,
-      end: true,
+      errors: {},
     });
   });
 
   it('should return async action add', () => {
-    const asyncName = 'test';
+    const name = 'test';
     expect(
-      reducer({ actions: [] }, actions.asyncAddActionActionCreator(asyncName))
+      reducer({
+        run: false,
+        end: true,
+        actions: [],
+      }, actions.addAction(name))
     ).toEqual({
-      actions: [asyncName],
+      run: true,
+      end: false,
+      actions: [name],
     });
   });
 
   it('should return async action removed from actions and added in parsed', () => {
-    const asyncName = 'test';
+    const name = 'test';
     expect(
-      reducer({ actions: [asyncName], parsed: [] }, actions.asyncPasrsedActionActionCreator(asyncName))
+      reducer({
+        run: true,
+        end: false,
+        actions: [name],
+        parsed: [],
+        errors: {},
+      }, actions.parsedActionActionCreator(name))
     ).toEqual({
+      run: false,
+      end: true,
       actions: [],
-      parsed: [asyncName],
+      parsed: [name],
+      errors: {},
+    });
+  });
+
+  it('should return async action removed from actions and added in error', () => {
+    const name = 'test';
+    const error = new Error('test');
+    expect(
+      reducer({
+        run: true,
+        end: false,
+        actions: [name],
+        parsed: [],
+        errors: {},
+      }, actions.errorActionActionCreator(name, error))
+    ).toEqual({
+      run: false,
+      end: true,
+      actions: [],
+      parsed: [],
+      errors: { [name]: error },
     });
   });
 });

@@ -1,6 +1,4 @@
-export reduxUniversalRender from './render';
-export reduxUniversalRenderMiddleware from './middleware';
-export reduxUniversalRenderReducer from './reducer';
-export reduxUniversalRenderActions from './actions';
-export reduxUniversalRenderSelectors from './selectors';
-export { createAsyncActions, createSyncActions } from './createActions';
+export awaitRender from './render';
+export reducer from './reducer';
+export * as actions from './actions';
+export * as selectors from './selectors';

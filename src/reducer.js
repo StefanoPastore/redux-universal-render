@@ -1,52 +1,59 @@
 import {
-  ASYNC_INIT,
-  ASYNC_END,
-  ASYNC_ADD_ACTION,
-  ASYNC_PARSED_ACTION,
+  ADD_ACTION,
+  PARSED_ACTION,
+  ERROR_ACTION,
 } from './actions';
 
 export default (state = {
   run: false,
-  end: false,
+  end: true,
   actions: [],
   parsed: [],
+  errors: {},
 }, action) => {
   switch (action.type) {
-    case ASYNC_INIT:
+    case ADD_ACTION:
       return {
         ...state,
         run: true,
-      };
-    case ASYNC_END:
-      return {
-        ...state,
-        end: true,
-        run: false,
-      };
-    case ASYNC_ADD_ACTION:
-      return {
-        ...state,
+        end: false,
         actions: [
           ...state.actions,
           action.name,
         ],
       };
-    case ASYNC_PARSED_ACTION:
-      return (() => {
-        const actions = state.actions;
-        actions.splice(actions.indexOf(action.name), 1);
+    case PARSED_ACTION: {
+      const actions = [...state.actions];
+      actions.splice(actions.indexOf(action.name), 1);
+      const parsed = [...state.parsed, action.name];
+      const actionsCount = actions.length;
+      const parsedCount = Object.keys(state.errors).length + parsed.length;
+      const run = actionsCount > parsedCount;
 
-        const parsed = [
-          ...state.parsed,
-          action.name,
-        ];
+      return {
+        ...state,
+        run,
+        end: !run,
+        actions,
+        parsed,
+      };
+    }
+    case ERROR_ACTION: {
+      const actions = [...state.actions];
+      actions.splice(actions.indexOf(action.name), 1);
+      const errors = { ...state.errors, [action.name]: action.error };
+      const actionsCount = Object.keys(actions).length;
+      const parsedCount = Object.keys(errors).length + state.parsed.length;
+      const run = actionsCount > parsedCount;
 
-        return {
-          ...state,
-          actions,
-          parsed,
-        };
-      })();
+      return {
+        ...state,
+        run,
+        end: !run,
+        actions,
+        errors,
+      };
+    }
     default:
       return state;
   }

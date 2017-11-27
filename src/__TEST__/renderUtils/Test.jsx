@@ -1,8 +1,7 @@
-import { Component, PropTypes } from 'react';
 import { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { asyncActionCreator } from './actions';
+import { asyncAction } from './actions';
 
 class Test extends Component {
   static propTypes = {
@@ -10,9 +9,9 @@ class Test extends Component {
     async: PropTypes.bool.isRequired,
   }
 
-  componentWillMount() {
+  async componentWillMount() {
     if (this.props.async) {
-      this.props.asyncAction();
+      await this.props.asyncAction();
     }
   }
 
@@ -23,7 +22,7 @@ class Test extends Component {
 
 export default connect(
   null,
-  dispatch => ({
-    asyncAction: () => dispatch(asyncActionCreator()),
-  }),
+  {
+    asyncAction,
+  },
 )(Test);

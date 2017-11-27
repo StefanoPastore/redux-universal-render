@@ -1,25 +1,27 @@
-import { renderToStaticMarkup } from 'react-dom/server';
 import { inExecution, isEnded } from './selectors';
+import walkComponentTree from './walkComponentTree';
 
-export default (
+const awaitRender = ({
   store,
   render,
-  cb = () => {},
-  renderMethod = renderToStaticMarkup
-) => {
-  if (!store) throw new Error('ReduxUniversalRender: Store is required in render!');
+  cb,
+}) => {
+  if (!store || !cb) throw new Error('ReduxUniversalRender: Store is required in render!');
 
-  renderMethod(render);
+  const { getState, subscribe } = store;
 
-  if (inExecution(store.getState())) {
-    const unsubscribe = store.subscribe(() => {
-      if (isEnded(store.getState())) {
+  walkComponentTree(render);
+
+  if (inExecution(getState())) {
+    const unsubscribe = subscribe(() => {
+      if (isEnded(getState())) {
         unsubscribe();
-
-        cb();
+        awaitRender({ store, render, cb });
       }
     });
   } else {
     cb();
   }
 };
+
+export default awaitRender;
