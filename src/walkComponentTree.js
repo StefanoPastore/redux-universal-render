@@ -3,6 +3,7 @@ import { Children } from 'react';
 const walkComponentTree = (element, context) => {
   let children = null;
   let nextContext = context;
+
   if (typeof element.type === 'function') {
     const Component = element.type;
     const props = { ...Component.defaultProps, ...element.props };
@@ -43,13 +44,10 @@ const walkComponentTree = (element, context) => {
       : undefined;
   }
 
-
-  if (children === null) {
-    return;
-  } else if (Children.count(children)) {
-    Children.map(children, (cur) => walkComponentTree(cur, nextContext));
-  } else {
-    walkComponentTree(children, nextContext);
+  if (children && Children.count(children)) {
+    Children.map(children, (cur) => {
+      walkComponentTree(cur, nextContext);
+    });
   }
 };
 
