@@ -8,7 +8,7 @@ export const syncActionCreator = () => ({ type: ASYNC_ACTION });
 export const asyncAction = () => async (dispatch, getState) => {
   if (isParsed(asyncName)(getState())) return;
 
-  dispatch(addAction(asyncName, asyncAction()));
+  dispatch(addAction(asyncName));
 
   await new Promise((resolve) => {
     setTimeout(() => {
