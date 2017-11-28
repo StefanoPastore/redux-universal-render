@@ -153,3 +153,19 @@ export const asyncAction = () => (dispatch, getState) => {
     * cb (required): Function, it is called when all async actions dispatched are ended
 
   })
+
+  - createActions(
+
+    * name: string or function that receive getState and return unique name for actions
+    * action: async action to await
+
+  )
+
+  Example:
+  ```js
+  import { createActions } from 'redux-universal-render';
+
+  createActions((getState) => `name_${getState().myVar}`, async (dispatch, getState) => {
+    // ... my logic
+  });
+  ```
