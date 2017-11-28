@@ -1,15 +1,16 @@
-export const createAsyncActions = name => method => {
-  const externalMethod = method;
-  externalMethod.asyncName = typeof name === 'function' ? name() : name;
-  return externalMethod;
-};
+import { addAction, parsedAction, errorAction } from './actions';
+import { isPending, isParsed } from './selectors';
 
-export const createSyncActions = name => action => {
-  const getName = typeof name === 'function' ? name : () => name;
+export default (getName, action) => async (dispatch, getState) => {
+  const name = typeof getName === 'function' ? getName(getState) : getName;
+  if (isPending(name)(getState()) || isParsed(name)(getState())) return;
 
-  if (typeof action === 'function') {
-    return { ...action(), asyncName: getName() };
+  dispatch(addAction(name));
+
+  try {
+    await dispatch(action);
+    dispatch(parsedAction(name));
+  } catch (e) {
+    dispatch(errorAction(name, e));
   }
-
-  return { ...action, asyncName: getName() };
 };

@@ -1,46 +1,52 @@
-import {
-  createAsyncActions,
-  createSyncActions,
-} from '../createActions';
+import createActions from '../createActions';
+
+const fakeStore = ({
+  actions = [],
+  parsed = [],
+  errors = {},
+} = {}) => ({
+  reduxUniversalRenderReducer: {
+    actions,
+    parsed,
+    errors,
+  },
+});
 
 describe('createActions', () => {
-  it('should create a sync action with object', () => {
-    const type = 'TYPE';
-    const asyncName = 'ASYNC_NAME';
-    const expectedAction = {
-      type,
-      asyncName,
+  it('should create action with function name and receive getState', () => {
+    const getName = jest.fn().mockReturnValue('test');
+    const getState = jest.fn().mockReturnValue(fakeStore());
+    const fn = createActions(getName, () => {});
+    fn(() => {}, getState);
+    expect(getName).toHaveBeenCalledWith(getState);
+  });
+
+  it('should create action and call it', () => {
+    const name = 'test';
+    const action = jest.fn();
+    const dispatch = jest.fn();
+    const fn = createActions(name, action);
+    fn(dispatch, () => fakeStore());
+    expect(dispatch).toHaveBeenCalled();
+  });
+
+  it('should create throw action and call it', () => {
+    const name = 'test';
+    const action = () => { throw new Error('test'); };
+    const fn = createActions(name, action);
+    const dispatch = (a) => {
+      if (typeof a === 'function') a();
     };
-    expect(createSyncActions(asyncName)({ type })).toEqual(expectedAction);
+    expect(
+      fn(dispatch, () => fakeStore())
+    ).toThrowError();
   });
 
-  it('should create a sync action with funcion', () => {
-    const type = 'TYPE';
-    const asyncName = 'ASYNC_NAME';
-    const expectedAction = {
-      type,
-      asyncName,
-    };
-    const actionCreator = () => ({ type });
-    expect(createSyncActions(asyncName)(actionCreator)).toEqual(expectedAction);
-  });
-
-  it('should create an async action', () => {
-    const asyncName = 'ASYNC_NAME';
-    let count = 0;
-    const asyncAction = () => count++;
-    const created = createAsyncActions(asyncName)(asyncAction);
-    created();
-    expect(count).toEqual(1);
-    expect(created.asyncName).toEqual(asyncName);
-  });
-
-  it('should create an async action with dynamic name', () => {
-    const createName = params => JSON.stringify(params);
-    const asyncActionCreate = (params) => createAsyncActions(() => createName(params))((dispatch, getState) => ({
-      dispatch,
-      getState,
-    }));
-    expect(asyncActionCreate({ test: true }).asyncName).toBeDefined();
+  it('should create action already parsed', () => {
+    const name = 'test';
+    const dispatch = jest.fn();
+    const fn = createActions(name, () => {});
+    fn(dispatch, () => fakeStore({ parsed: [name] }));
+    expect(dispatch).not.toHaveBeenCalled();
   });
 });

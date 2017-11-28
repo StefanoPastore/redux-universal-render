@@ -1,23 +1,12 @@
 import { createStore, compose, applyMiddleware, combineReducers } from 'redux';
-import {
-  reduxUniversalRenderMiddleware,
-  reduxUniversalRenderReducer,
-} from '../../';
+import { reducer as reduxUniversalRenderReducer } from '../../';
 import thunk from 'redux-thunk';
 import reducer from './reducer';
 
 const configureStore = (initialState = {}) => createStore(
-  combineReducers({
-    reducer,
-    reduxUniversalRenderReducer,
-  }),
+  combineReducers({ reducer, reduxUniversalRenderReducer }),
   initialState,
-  compose(
-    applyMiddleware(
-      reduxUniversalRenderMiddleware,
-      thunk
-    )
-  )
+  compose(applyMiddleware(thunk))
 );
 
 export default configureStore;

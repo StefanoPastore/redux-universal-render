@@ -1,14 +1,20 @@
-import { createAsyncActions, createSyncActions } from '../../';
-
+import { addAction, parsedAction } from '../../actions';
+import { isParsed } from '../../selectors';
 const asyncName = 'test';
 
 export const ASYNC_ACTION = 'ASYNC_ACTION';
-export const syncActionCreator = () => (createSyncActions(asyncName)({ type: ASYNC_ACTION }));
+export const syncActionCreator = () => ({ type: ASYNC_ACTION });
 
-const asyncAction = dispatch => {
-  setTimeout(() => {
-    dispatch(syncActionCreator());
-  }, 200);
+export const asyncAction = () => async (dispatch, getState) => {
+  if (isParsed(asyncName)(getState())) return;
+
+  dispatch(addAction(asyncName));
+
+  await new Promise((resolve) => {
+    setTimeout(() => {
+      dispatch(syncActionCreator());
+      dispatch(parsedAction(asyncName));
+      resolve();
+    }, 200);
+  });
 };
-
-export const asyncActionCreator = () => (createAsyncActions(asyncName)(asyncAction));

@@ -12,7 +12,9 @@ describe('selectors', () => {
   it('should return async actions is ended', () => {
     expect(
       selectors.isEnded({ reduxUniversalRenderReducer: { end: true } })
-    ).toEqual(true);
+    ).toEqual(
+      true
+    );
   });
 
   it('should return async actions to parse', () => {
@@ -30,6 +32,51 @@ describe('selectors', () => {
       selectors.parsed({ reduxUniversalRenderReducer: { parsed } })
     ).toEqual(
       parsed
+    );
+  });
+
+  it('should return async actions error', () => {
+    const errors = { test: {} };
+    expect(
+      selectors.errors({ reduxUniversalRenderReducer: { errors } })
+    ).toEqual(
+      errors
+    );
+  });
+
+  it('should return async action pending', () => {
+    const name = 'test';
+    const actions = [name];
+    expect(
+      selectors.isPending(name)({ reduxUniversalRenderReducer: { actions } })
+    ).toBe(
+      true
+    );
+  });
+
+  it('should return async action parsed', () => {
+    const name = 'test';
+    const parsed = [name];
+    const errors = { [name]: new Error('test') };
+    expect(
+      selectors.isParsed(name)({ reduxUniversalRenderReducer: { parsed, errors: {} } })
+    ).toBe(
+      true
+    );
+    expect(
+      selectors.isParsed(name)({ reduxUniversalRenderReducer: { parsed: [], errors } })
+    ).toBe(
+      true
+    );
+  });
+
+  it('should return async action error', () => {
+    const name = 'test';
+    const errors = { [name]: {} };
+    expect(
+      selectors.isError(name)({ reduxUniversalRenderReducer: { errors } })
+    ).toBe(
+      true
     );
   });
 });
