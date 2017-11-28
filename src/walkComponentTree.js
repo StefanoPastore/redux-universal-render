@@ -46,6 +46,7 @@ const walkComponentTree = (element, context) => {
 
   if (children && Children.count(children)) {
     Children.map(children, (cur) => {
+      if (!cur) return;
       walkComponentTree(cur, nextContext);
     });
   }
