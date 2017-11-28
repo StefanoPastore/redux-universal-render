@@ -125,6 +125,25 @@ export const asyncAction = () => (dispatch, getState) => {
   }
   ```
 
+### selectors
+
+  - inExecution: return true if there is async actions in queue
+
+  - isEnded: return true if there isn't async actions in queue
+
+  - actions: return array of actions in queue
+
+  - parsed: return array of actions already parsed
+
+  - errors: return object with action name: error
+
+  - isPending: return true if action name is added in queue
+
+  - isParsed: return true if action name is already parsed
+
+  - isError: return true if action name is in error
+
+
 ### API
 
   - awaitRender({
