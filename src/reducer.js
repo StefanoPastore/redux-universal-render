@@ -27,8 +27,7 @@ export default (state = {
       actions.splice(actions.indexOf(action.name), 1);
       const parsed = [...state.parsed, action.name];
       const actionsCount = actions.length;
-      const parsedCount = Object.keys(state.errors).length + parsed.length;
-      const run = actionsCount > parsedCount;
+      const run = actionsCount > 0;
 
       return {
         ...state,
@@ -43,8 +42,7 @@ export default (state = {
       actions.splice(actions.indexOf(action.name), 1);
       const errors = { ...state.errors, [action.name]: action.error };
       const actionsCount = Object.keys(actions).length;
-      const parsedCount = Object.keys(errors).length + state.parsed.length;
-      const run = actionsCount > parsedCount;
+      const run = actionsCount > 0;
 
       return {
         ...state,
