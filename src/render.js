@@ -5,12 +5,13 @@ const awaitRender = ({
   store,
   render,
   cb,
+  ownerRender = walk => walk(),
 }) => {
   if (!store || !cb) throw new Error('ReduxUniversalRender: Store is required in render!');
 
   const { getState, subscribe } = store;
 
-  walkComponentTree(render);
+  ownerRender(() => walkComponentTree(render));
 
   if (inExecution(getState())) {
     const unsubscribe = subscribe(() => {
