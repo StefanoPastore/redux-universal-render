@@ -17,7 +17,7 @@ const awaitRender = ({
     const unsubscribe = subscribe(() => {
       if (isEnded(getState())) {
         unsubscribe();
-        awaitRender({ store, render, cb });
+        awaitRender({ store, render, cb, ownerRender });
       }
     });
   } else {
