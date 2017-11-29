@@ -151,6 +151,7 @@ export const asyncAction = () => (dispatch, getState) => {
     * store (required): Redux store
     * render component (required): React component to render
     * cb (required): Function, it is called when all async actions dispatched are ended
+    * ownerRender(walk) (optional): Function, receive function that render component you must call it can you wrap with your own business logic
 
   })
 
